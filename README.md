@@ -1,1 +1,19 @@
 # boke
+代码采用的是springboot2.7.12和java11，用其他的太麻烦了
+
+采用的是Mybaits-Plus来操作数据库，通过Server接口继承IService
+Impl继承ServiceImpl Mapper继承BaseMapper的方式使单表操作更简单
+
+注册是采用的163邮箱发送邮件注册，需要点击邮箱的链接将is_vaild置1，才能登录
+另外数据库还有一个编码是confrim_code做唯一验证码，采用的UUID的随机数
+
+登录后会随机生成一个token，里面存放了用户id，可以在登录后通过上下文来获取用户id，进而获取用户信息和博客
+token的生成是采用的jwt循环令牌的形式
+通过io.jsonwebtoken.Jwts提供的依赖来生成jwt，采用SignatureAlgorithm.HS256的加密形式，里面添加了时效12h，通过 claims来解析       
+
+每次登录都会生成一个token发给前端
+
+拦截器先判断请求方式，如果是GET的方式就会放行，如果不是GET的方式就会在webConfig的.excludePathPattern查找是否取消拦截，若没有取消拦截就会判断有没有token并解析是否合法，如果合法就将解析后的用户id放入上下文中，通过GetToken的类调用。
+
+还有一个全局异常检测，如果其他代码没有检测出异常，会在ClobalExceptionHandler类中检查出，并给前端错误信息("对不起操作失败，请联系管理员")
+
