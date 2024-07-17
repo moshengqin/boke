@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/boke?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
+  mail:
+    protocol: smtp
+    host: smtp.163.com
+    port: 25
+    username: 18531792721@163.com
+    password: HBOGITSZJBQTGTNJ
+    default-encoding: utf-8
+    properties:
+      mail:
+        debug: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  logging:
+    level:
+      com.example: debug
+    pattern:
+      dateformat: HH:mm:ss
+  mybatis:
+    mapper-locations: classpath*:mapper/*.xml
+  mybatis-plus:
+    type-aliases-package: com.example.demo.domain.po
+    global-config:
+      db-config:
+        id-type: auto
+server1:
+  port1: "8080"
+  address1: "localhost"
+server:
+  port: 8080
